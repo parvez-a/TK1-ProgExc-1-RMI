@@ -1,0 +1,83 @@
+<project name="exampleRMI" default="run">
+
+	<target name="init">
+		<echo>+---------Fly Game Project----------+</echo>
+		<echo>+</echo>
+		<echo>+ TK1 1st Programming Exercise</echo>
+		<echo>+ Team members:</echo>
+		<echo>+		- Jason</echo>
+		<echo>+		- Dimas</echo>
+		<echo>+		- Subh</echo>
+		<echo>+		- Parvez</echo>
+		<echo>+-----------------------------------+</echo>
+		
+		<property name="java.security" value="-Djava.security.policy=policy/game.policy"/>
+		
+		<path id="classpath">
+			<fileset dir="client"/>
+			<fileset dir="server"/>
+			<fileset dir="util"/>
+		</path>
+		
+		<presetdef name="javac">
+			<javac includeantruntime="false"/>
+		</presetdef>
+		
+		<presetdef name="runclient">
+			<exec executable="java">
+				<arg value="${java.security}" />
+				<arg value="client.C_GameClient"/>
+				<arg value="../Util"/>
+			</exec>
+		</presetdef>
+		
+		<presetdef name="runserver">
+			<exec executable="java" taskname="Server">
+				<arg value="${java.security}" />
+				<arg value="server.C_GameServer"/>
+			</exec>
+		</presetdef>
+		
+	</target>
+
+	<target name="compile" depends="init" description="Compiling class files...">
+		<javac destdir="." srcdir="util" />
+		<javac destdir="." srcdir="server" />
+		<javac destdir="." srcdir="client" />
+	</target>
+	<!--
+	<target name="startRMI" depends="compile" description="Starting RMI registry...">
+		<parallel>
+			<exec executable="rmiregistry" />
+		</parallel>
+	</target>
+	-->
+	<target name="stub" depends="compile" description="Creating stub file..">
+		<exec executable="rmic">
+			<arg value="server.M_GameServer" />
+		</exec>
+	</target>
+	
+	<target name="copystub" depends="stub" description="Copying stub to Util folder..">
+		<copy file="server/M_GameServer_Stub.class" todir="Util"/>
+	</target>
+	
+	<target name="run" depends="copystub" description="Run the server-client programs..">
+		<parallel>
+		<!--
+			<java classname="server.C_GameServer" taskname="Server" fork="yes">
+				<classpath>
+					<path refid="classpath"/>
+				</classpath>
+			</java>
+			<runclient taskname="Client 1"><arg value="Alice"/></runclient>
+			<runclient taskname="Client 2"><arg value="Bob"/></runclient>
+			-->
+			
+			<runserver />
+			<runclient taskname="Client 1"><arg value="Bob"/></runclient>
+			<runclient taskname="Client 2"><arg value="Alice"/></runclient>
+		</parallel>
+	</target>
+	
+</project>

@@ -1,0 +1,5 @@
+- test on VM
+- ANT script so that it could execute RMIregistry and the server-client
+- documentation on the classes
+- pdf file for team name, explanation on architecture of the program, directory and its uses
+- upload to Moodle
