@@ -37,21 +37,14 @@
 				<arg value="server.C_GameServer"/>
 			</exec>
 		</presetdef>
-		
 	</target>
 
-	<target name="compile" depends="init" description="Compiling class files...">
+	<target name="compile" depends="init" description="Compiling class files..">
 		<javac destdir="." srcdir="util" />
 		<javac destdir="." srcdir="server" />
 		<javac destdir="." srcdir="client" />
 	</target>
-	<!--
-	<target name="startRMI" depends="compile" description="Starting RMI registry...">
-		<parallel>
-			<exec executable="rmiregistry" />
-		</parallel>
-	</target>
-	-->
+	
 	<target name="stub" depends="compile" description="Creating stub file..">
 		<exec executable="rmic">
 			<arg value="server.M_GameServer" />
@@ -64,16 +57,7 @@
 	
 	<target name="run" depends="copystub" description="Run the server-client programs..">
 		<parallel>
-		<!--
-			<java classname="server.C_GameServer" taskname="Server" fork="yes">
-				<classpath>
-					<path refid="classpath"/>
-				</classpath>
-			</java>
-			<runclient taskname="Client 1"><arg value="Alice"/></runclient>
-			<runclient taskname="Client 2"><arg value="Bob"/></runclient>
-			-->
-			
+			<java fork="yes" classname="sun.rmi.registry.RegistryImpl" />
 			<runserver />
 			<runclient taskname="Client 1"><arg value="Bob"/></runclient>
 			<runclient taskname="Client 2"><arg value="Alice"/></runclient>
