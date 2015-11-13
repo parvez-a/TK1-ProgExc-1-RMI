@@ -14,7 +14,10 @@ import util.ClientInfo;
 
 public class V_GameClient extends JPanel{
 	
-	/**
+	/**V_GameClient is the View component of the Client that generates the output presentation to the user 
+	 * based on the changes in the model. This class handles the settings necessary to onboard new client. 
+	 * It uses canvas object of GameCanvas class to perform tasks like setting client name, setting fly position, 
+	 * setting mouse listners etc.
 	 * 
 	 */
 	private static final long serialVersionUID = -8003806448600269380L;
@@ -26,6 +29,7 @@ public class V_GameClient extends JPanel{
 	
 	private GameCanvas canvas;
 	
+	//Constructor to initialize the layouts in the canvas.
 	public V_GameClient(){
 		setLayout(new BorderLayout());
 		
@@ -46,30 +50,37 @@ public class V_GameClient extends JPanel{
 		add(canvas, BorderLayout.CENTER);
 	}
 	
+	//To end game
 	public void disableGame(){
 		canvas.toggleCanDraw(false);
 	}
 	
+	//To set client status
 	public void setStatus(String status){
 		lblStatus.setText("Status: "+status);
 	}
 	
+	//To set client name
 	public void setName(String name){
 		lblClientName.setText(name);
 	}
 	
+	//To set fly position by calling setFlyPosition method using GameCanvas class's object
 	public void setFlyPosition(Point p){
 		canvas.setFlyPosition(p);
 	}
 	
+	//To set fly dimension by calling setFlyDimension method using GameCanvas class's object
 	public Rectangle getFlyDimension(){
 		return canvas.getFlyDimension();
 	}
 	
+	//Method to set mouse listeners using GameCanvas class's object
 	public void setMouseListener(MouseListener listener){
 		canvas.addMouseListener(listener);
 	}
 	
+	//Method to add more than one client
 	public void setClientList(ArrayList<ClientInfo> clients){
 		defModClients.clear();
 		for (ClientInfo cl : clients){
