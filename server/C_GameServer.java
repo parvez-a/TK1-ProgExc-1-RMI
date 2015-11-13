@@ -14,7 +14,9 @@ import util.ClientInfo;
 
 public class C_GameServer extends JFrame implements WindowListener {
 
-	/**
+	/**This is the Controller component of the Fly Game Server that handles user interaction.
+   	   It reads data from the view, controls user input(like Mouse clicked),
+   	   and sends input data to the model.
 	 * 
 	 */
 	private static final long serialVersionUID = 44117252607469952L;
@@ -29,6 +31,7 @@ public class C_GameServer extends JFrame implements WindowListener {
 	
 	public BufferedImage imgFly;
 	
+	//To generate the Game server
 	public C_GameServer() throws IOException{
 		model = new M_GameServer(this);
 		Naming.rebind(PATH_TO_STUB, model);
@@ -51,6 +54,7 @@ public class C_GameServer extends JFrame implements WindowListener {
 		return currentFlyPos;
 	}
 	
+	//To generate random fly coordinates
 	public Point generateFlyPosition(){
 		Point p = new Point(0,0);
 		
@@ -74,6 +78,7 @@ public class C_GameServer extends JFrame implements WindowListener {
 		}
 	}
 	
+	//In order to show the list of logged in clients
 	public void showClients(ArrayList<ClientInfo> clients, String statToShow){
 		view.setClients(clients);
 		view.setStatus(statToShow);
