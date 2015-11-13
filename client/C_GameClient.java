@@ -15,7 +15,13 @@ import javax.swing.JFrame;
 
 import util.ClientInfo;
 
-
+/* This is the Controller of the Fly Game Client that handles user interaction.
+   It reads data from the view, controls user input(like Mouse clicked),
+   and sends input data to the model.
+ * Program to demonstrate window listeners and event handlers 
+   The WindowListener interface listens for events associated with Window objects, 
+   such as closing a window and responds in corresponding methods.
+ */
 public class C_GameClient extends JFrame implements WindowListener {
 
 	private static final long serialVersionUID = 4842866886891221040L;
@@ -31,6 +37,7 @@ public class C_GameClient extends JFrame implements WindowListener {
 	private STATE state;
 	private String name;
 	
+	//Interface for receiving mouse events(release, press, exit, enter, click)
 	private MouseListener gameMouseListener = new MouseListener() {
 		@Override
 		public void mouseReleased(MouseEvent e) {}
@@ -59,6 +66,7 @@ public class C_GameClient extends JFrame implements WindowListener {
 		}
 	};
 	
+	//Constructor to initialize client name and server location
 	public C_GameClient(String name, String serverLoc) throws RemoteException, MalformedURLException, NotBoundException{
 		model = new M_GameClient(name, this);
 		Naming.rebind("client", model);
