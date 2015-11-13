@@ -10,7 +10,8 @@ import javax.swing.JPanel;
 
 public class GameCanvas extends JPanel{
 
-	/**
+	/**Program to prepare the canvas. JPanel is a Swing container which is used to hold containers
+	 * like background image, object etc. 
 	 * 
 	 */
 	private static final long serialVersionUID = -6851785130639961178L;
@@ -24,6 +25,7 @@ public class GameCanvas extends JPanel{
 	
 	private boolean canDraw;
 	
+	//Read and load background image and fly
 	public GameCanvas(){
 		try {
 			imgBG = ImageIO.read(this.getClass().getResourceAsStream(PATH_TO_BG));
@@ -36,23 +38,27 @@ public class GameCanvas extends JPanel{
 		}
 	}
 	
+	//Refresh the view whenever there is change in the component
 	public void toggleCanDraw(boolean toggle){
 		canDraw = toggle;
 		this.repaint();
 	}
 	
+	//To get fly dimension
 	public Rectangle getFlyDimension(){
 		if (flyPosition != null && imgFly != null)
 			return new Rectangle(flyPosition.x, flyPosition.y, imgFly.getWidth(), imgFly.getHeight());
 		return null;
 	}
 	
+	//To set new fly position and refresh the view
 	public void setFlyPosition(Point p){
 		flyPosition = p;
 		this.repaint();
 	}
 
 	@Override
+	//Get the screen with the background and fly
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
 		super.paint(g);
