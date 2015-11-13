@@ -3,7 +3,7 @@ import java.io.Serializable;
 
 public class ClientInfo implements Serializable{
 
-	/**
+	/**This class is used to get the client information such as name, its IGameClient object, score etc.
 	 * 
 	 */
 	private static final long serialVersionUID = 1651101774565253684L;
