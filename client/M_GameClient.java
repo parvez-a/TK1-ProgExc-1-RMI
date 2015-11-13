@@ -14,7 +14,13 @@ import util.IGameServer;
 
 public class M_GameClient extends UnicastRemoteObject implements IGameClient,Serializable{
 
-	/**
+	/** This is the Model component of the Client that stores data that is retrieved according to commands(like login, logout)
+	 *  from the controller and displays in the view.
+	 * 
+	 * Used for exporting a remote object and obtaining a stub that communicates 
+	 * to the remote object. Serializable interface associates each serializable class with a version number,
+	 * calling a VersionUID which is used to verify the sender and receiver serialized object have loaded 
+	 * classes for that object that are compatible with respect to serialization.
 	 * 
 	 */
 	private static final long serialVersionUID = -2144957160425748971L;
@@ -25,6 +31,7 @@ public class M_GameClient extends UnicastRemoteObject implements IGameClient,Ser
 	
 	private IGameServer ifaceServer;
 	
+	//Constructor to initialize client name and its object
 	protected M_GameClient(String name, C_GameClient client) throws RemoteException, MalformedURLException, NotBoundException {
 		super();
 		this.name = name;
@@ -37,6 +44,7 @@ public class M_GameClient extends UnicastRemoteObject implements IGameClient,Ser
 	}
 
 	@Override
+	//Method to receive and update new fly position
 	public void receiveFlyPosition(Point p) throws RemoteException{
 		// TODO Auto-generated method stub
 		System.out.println("'"+name+"' receives new fly position from the server!!: ("+p.x+","+p.y+")");
@@ -45,22 +53,26 @@ public class M_GameClient extends UnicastRemoteObject implements IGameClient,Ser
 		}
 	}
 	
+	//Login method allows new client to login to the server
 	public void login(String name, IGameClient client) throws MalformedURLException, RemoteException, NotBoundException{
 		ifaceServer = (IGameServer) Naming.lookup(C_GameClient.SERVER_STUB_LOC);
 		ifaceServer.login(name, client);
 	}
 	
+	//Logout method allows logged in client to logout from the server
 	public void logout(String name) throws MalformedURLException, RemoteException, NotBoundException {
 		ifaceServer = (IGameServer) Naming.lookup(C_GameClient.SERVER_STUB_LOC);
 		ifaceServer.logout(name);
 	}
 	
+	//Method to send a hit confirmation when mouse is clicked on the fly
 	public void sendFlyHitConfirmation(String name) throws MalformedURLException, RemoteException, NotBoundException{
 		ifaceServer = (IGameServer) Naming.lookup(C_GameClient.SERVER_STUB_LOC);
 		ifaceServer.addPoint(name);
 	}
 
 	@Override
+	//To fetch list of clients
 	public void receiveClientsUpdate(ArrayList<ClientInfo> arr) {
 		// TODO Auto-generated method stub
 		System.out.println("'"+name+"' receives client list from the server!!");
@@ -70,6 +82,7 @@ public class M_GameClient extends UnicastRemoteObject implements IGameClient,Ser
 	}
 
 	@Override
+	//Fetch window settings (width, height) and update the same
 	public void receiveSetting(int gameWidth, int gameHeight) throws RemoteException {
 		// TODO Auto-generated method stub
 		System.out.println("'"+name+"' receives server's recommended settings for gameplay!!");
@@ -79,6 +92,7 @@ public class M_GameClient extends UnicastRemoteObject implements IGameClient,Ser
 	}
 
 	@Override
+	//Method to shutdown the server and end game 
 	public void serverShutDown() throws RemoteException {
 		// TODO Auto-generated method stub
 		System.out.println("'"+name+"' receives server's shutdown signal!! disabling all gameplay..");
