@@ -9,6 +9,11 @@ import util.ClientInfo;
 import util.IGameClient;
 import util.IGameServer;
 
+/* This is the model class of the Game Server that stores data that is retrieved according to commands(like login, logout)
+ * from the controller and displays in the view.
+ * 
+ */
+
 public class M_GameServer extends UnicastRemoteObject implements IGameServer{
 
 	private ArrayList<ClientInfo> clients;
@@ -35,6 +40,7 @@ public class M_GameServer extends UnicastRemoteObject implements IGameServer{
 	}
 	
 	@Override
+	//Helps to login the client when client name and Game client object are passed
 	public synchronized void login(String clientname, IGameClient client) throws RemoteException{
 		// TODO Auto-generated method stub
 		clients.add(new ClientInfo(clientname, 0, client));
@@ -57,6 +63,7 @@ public class M_GameServer extends UnicastRemoteObject implements IGameServer{
 	}
 
 	@Override
+	//Allows clien to logout and displays subsequent message on the server window
 	public void logout(String clientname) throws RemoteException {
 		// TODO Auto-generated method stub
 		int idx = findClientIdxByName(clientname);
@@ -74,6 +81,7 @@ public class M_GameServer extends UnicastRemoteObject implements IGameServer{
 		}
 	}
 	
+	//Allows a client to end game
 	public void shutdownServer() throws RemoteException{
 		for (int i = 0 ; i < clients.size() ; i++){
 			IGameClient client = clients.get(i).getClientInterface();
@@ -82,6 +90,7 @@ public class M_GameServer extends UnicastRemoteObject implements IGameServer{
 	}
 
 	@Override
+	//Calculates score when fly is hit and displays the message on the server window
 	public void addPoint(String clientname) throws RemoteException {
 		// TODO Auto-generated method stub
 		int idx = findClientIdxByName(clientname);
