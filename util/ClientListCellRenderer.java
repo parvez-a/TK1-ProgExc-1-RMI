@@ -9,6 +9,8 @@ import javax.swing.ListCellRenderer;
 public class ClientListCellRenderer extends JLabel implements ListCellRenderer<ClientInfo>{
 
 	/**
+	 * Produces a component to output one item in a List. For example, here it shows the score whose background
+	 * turns cyan when selected and otherwise remains white.
 	 * 
 	 */
 	private static final long serialVersionUID = -8067622259123373101L;
